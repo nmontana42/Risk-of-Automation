@@ -1,0 +1,32 @@
+{
+  "name": "risk-of-automation",
+  "version": "1.0.0",
+  "description": "Senior Digital Media Capstone",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack && webpack serve",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nmontana42/Risk-of-Automation.git"
+  },
+  "author": "Nick Montana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nmontana42/Risk-of-Automation/issues"
+  },
+  "homepage": "https://github.com/nmontana42/Risk-of-Automation#readme",
+  "dependencies": {
+    "aws": "0.0.3-2",
+    "aws-amplify": "latest",
+    "copy-webpack": "^1.1.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^7.0.0",
+    "webpack": "^5.22.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
