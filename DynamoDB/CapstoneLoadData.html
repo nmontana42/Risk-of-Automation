@@ -19,7 +19,7 @@ var dynamodb = new AWS.DynamoDB();
 
 function processFile(evt) {
     document.getElementById('textarea').innerHTML = "";
-    document.getElementById('textarea').innerHTML += "Importing movies into DynamoDB. Please wait..." + "\n";
+    document.getElementById('textarea').innerHTML += "Importing data into DynamoDB. Please wait..." + "\n";
     var file = evt.target.files[0];
     if (file) {
         var r = new FileReader();
@@ -28,15 +28,15 @@ function processFile(evt) {
             var Capstone_Data = JSON.parse(contents);
 
             Capstone_Data.forEach(function (Dataset) {
-                document.getElementById('textarea').innerHTML += "Processing: " + Dataset.Occupation + "\n";
+                document.getElementById('textarea').innerHTML += "Processing: " + Dataset.Occupation + ' ' + Dataset.Probability + "\n";
                 var params = {
                     TableName: "CapstoneRisk",
                     Item: {
-                        "Occupation": Dataset.Occupation,
-                        "Probability": Dataset.Probability,
+                        "Occupation" : {S: Dataset.Occupation},
+                        "Probability": {N: Dataset.Probability}
                     }
                 };
-                dynamodb.put(params, function (err, data) {
+                dynamodb.putItem(params, function (err, data) {
                     if (err) {
                         document.getElementById('textarea').innerHTML += "Unable to add Occupation: " + count + Dataset.Occupation + "\n";
                         document.getElementById('textarea').innerHTML += "Error JSON: " + JSON.stringify(err) + "\n";

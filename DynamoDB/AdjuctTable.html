@@ -19,7 +19,7 @@ var dynamodb = new AWS.DynamoDB();
 
 function createRisk() {
     var params = {
-        TableName : "CapstoneRisk",
+        TableName : "CapstoneRisk2",
         KeySchema: [
             { AttributeName: "Occupation", KeyType: "HASH"},
             { AttributeName: "Probability", KeyType: "RANGE" },
