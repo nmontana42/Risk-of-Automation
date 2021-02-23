@@ -1,0 +1,57 @@
+<html>
+<head>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+<script>
+
+AWS.config.region = "us-east-2";
+AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+
+   IdentityPoolId: "us-east-2:cd8b6ea9-b444-4d7f-b88f-55080d63a0e5",
+});
+AWS.config.credentials.get(function(){
+
+    // Credentials will be available when this function is called.
+    var accessKeyId = AWS.config.credentials.accessKeyId;
+    var secretAccessKey = AWS.config.credentials.secretAccessKey;
+});
+
+var dynamodb = new AWS.DynamoDB();
+
+function createRisk() {
+    var params = {
+        TableName : "CapstoneRisk",
+        KeySchema: [
+            { AttributeName: "Occupation", KeyType: "HASH"},
+            { AttributeName: "Probability", KeyType: "RANGE" },
+        ],
+        AttributeDefinitions: [
+            { AttributeName: "Occupation", AttributeType: "S" },
+            { AttributeName: "Probability", AttributeType: "N" }
+        ],
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 5,
+            WriteCapacityUnits: 5
+        }
+    };
+
+    dynamodb.createTable(params, function(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML = "Unable to create table: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML = "Created table: " + "\n" + JSON.stringify(data, undefined, 2);
+        }
+    });
+}
+
+
+
+</script>
+</head>
+
+<body>
+<input id="createTableButton" type="button" value="Create Table" onclick="createRisk();" />
+<br><br>
+<textarea readonly id= "textarea" style="width:400px; height:800px"></textarea>
+
+</body>
+</html> 
